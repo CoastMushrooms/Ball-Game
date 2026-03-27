@@ -1,0 +1,156 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
+public class BallGame extends JPanel implements KeyListener
+{
+  Ball player;
+  JFrame frame;
+  
+  public BallGame()
+  {
+    frame = new JFrame("Ball Game");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(1800, 1000);
+    frame.add(this);
+    
+    player = new Ball(Color.GREEN, 500);
+    
+    frame.setVisible(true);
+    frame.addKeyListener(this);
+  }
+  
+  public void paintComponent(Graphics g)
+  {
+    super.paintComponent(g);
+    player.changeColor();
+    g.setColor(player.color);
+    g.fillOval(player.x, player.y, player.size, player.size);//xPos, yPos, height, width
+  }
+  
+  public void keyPressed(KeyEvent e)
+  {
+    if(e.getKeyCode() == 37)
+    {
+      if(player.x >= 0)
+      {
+        player.moveLeft();
+      }
+    }
+    
+    if(e.getKeyCode() == 38)
+    {
+      if(player.y >= 0)
+      {
+        player.moveUp();
+      }
+    }
+    
+    if(e.getKeyCode() == 39)
+    {
+      player.moveRight();
+    }
+    
+    if(e.getKeyCode() == 40)
+    {
+      player.moveDown();
+    }
+    
+    if(e.getKeyCode() == 65)
+    {
+      player.changeSize(-5);
+    }
+    
+    if(e.getKeyCode() == 68)
+    {
+      player.changeSize(5);
+    }
+    
+    fixBallPos();
+    
+    repaint();
+  }
+  
+  public void fixBallPos()
+  {
+    if(player.x < 0)
+    {
+      player.x = 0;
+    }
+    
+    if(player.y < 0)
+    {
+      player.y = 0;
+    }
+    
+    if(player.x > frame.getWidth() - player.size - 19) //size - 18
+    {
+      player.x = frame.getWidth() - player.size - 19;
+    }
+    
+    if(player.y > frame.getHeight() - player.size - 40) //size - 40
+    {
+      player.y = frame.getHeight() - player.size - 40;
+    }
+  }
+  
+  public void keyReleased(KeyEvent e)
+  {}
+  
+  public void keyTyped(KeyEvent e)
+  {}
+  
+  public static void main(String [] args)
+  {
+    BallGame run = new BallGame();
+  }
+  
+  
+  public class Ball
+  {
+    int x;
+    int y;
+    Color color;
+    int size;
+    
+    public Ball(Color c, int s)
+    {
+      x = 1707;
+      y = 885;
+      size = s;
+      color = c;
+      
+    }
+    
+    public void changeColor()
+    {
+      color = new Color (x%225, y%225, 0);//new color (r, b, g) between (0 - 225)
+    }
+    
+    public void changeSize(int adjust)
+    {
+      size += adjust;
+    }
+    
+    public void moveLeft()
+    {
+      x-=30;
+    }
+    
+    public void moveRight()
+    {
+      x+=30;
+    }
+    
+    public void moveUp()
+    {
+      y-=30;
+    }
+    
+    public void moveDown()
+    {
+      y+=30;
+    }
+  }
+}
