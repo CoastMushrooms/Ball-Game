@@ -1,5 +1,5 @@
 # Ball-Game
-This repositories contains files for a ball game 
+This repositories contains files for a ball game
 
 You can move around and change size
 
