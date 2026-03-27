@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
 public class BallGame extends JPanel implements KeyListener
 {
   Ball player;
@@ -17,8 +16,11 @@ public class BallGame extends JPanel implements KeyListener
     
     player = new Ball(Color.GREEN, 500);
     
+    setFocusable(true);
+    addKeyListener(this);
+    
     frame.setVisible(true);
-    frame.addKeyListener(this);
+    requestFocus();
   }
   
   public void paintComponent(Graphics g)
